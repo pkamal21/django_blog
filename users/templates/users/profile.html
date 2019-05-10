@@ -1,0 +1,52 @@
+{% extends "blog/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="content-section">
+    <div class="media">
+        <img class="rounded-circle account-img" src="{{ user.profile.image.url }}">
+        <div class="media-body">
+            <h2 class="account-heading">{{ user.username }}</h2>
+            <p class="text-secondary">{{ user.email }}</p>
+        </div>
+    </div>
+</div>
+<!-- FORM HERE -->
+<div class="form-group" style="display:'none';">
+    <button onclick="updateProfile()">Profile Update</button>
+    <form method='POST' id="form1" style="display:none;" enctype="multipart/form-data">
+        {% csrf_token %}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">
+                Profile Info
+            </legend>
+            {{u_form|crispy}}
+            {{p_form|crispy}}
+            {{blog_update|crispy}}
+        </fieldset>
+        <div class="form-group">
+            <button class="btn btn-outline-info">
+                Update
+            </button>
+        </div>
+    </form>
+    <!-- <br><br><br>
+    <hr>
+    <h2>Your posts are:</h2>
+    <hr>
+    {% for i in post %}
+    <h3>{{i.title}}</h3>
+    <h5>{{i.content}}</h5>
+    <h6>{{i.date_posted}}</h6>
+    <hr>
+    {% endfor %} -->
+</div>
+
+<script>
+    var toggle1 = false;
+
+    function updateProfile() {
+        toggle1 = !toggle1;
+        document.getElementById("form1").style.display = toggle1 ? "block" : "none";
+    }
+</script>
+{% endblock content %}

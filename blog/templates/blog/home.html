@@ -1,0 +1,33 @@
+{% extends 'blog/base.html' %} {% block content%} {% for post in posts %}
+<article class="media content-section">
+  <div class="media-body">
+    <div class="article-metadata">
+      <a class="mr-2" href="#">{{ post.author }}</a>
+      <small class="text-muted">{{ post.date_posted|date:'D d M, Y' }}</small>
+      <div class="media">
+        <img class="rounded-circle account-img" src="{{ post.author.profile.image.url }}">
+      </div>
+    </div>
+    <h2>
+      <a class="article-title" href="{% url 'post-detail' post.id%}">{{ post.title }}</a>
+    </h2>
+    <p>{{ post.like }}</p>
+
+    <p class="article-content">{{ post.content }}</p>
+    <input type="button" class="btn btn-primary" id="like" onclick="change()" value="Like">
+
+
+  </div>
+</article>
+{% endfor %}
+<script>
+  function change() // no ';' here
+  {
+    var elem = document.getElementById("like");
+    console.log(elem.value);
+
+    if (elem.value == "Like") elem.value = "Unlike";
+    else elem.value = "Like";
+  }
+</script>
+{% endblock content %}
